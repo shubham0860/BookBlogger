@@ -168,6 +168,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -180,6 +181,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="dashboard.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -209,6 +211,30 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\Kendo\Default\editor.png" />
+    <Content Include="Scripts\Kendo\Default\imagebrowser.png" />
+    <Content Include="Scripts\Kendo\Default\indeterminate.gif" />
+    <Content Include="Scripts\Kendo\Default\loading-image.gif" />
+    <Content Include="Scripts\Kendo\Default\loading.gif" />
+    <Content Include="Scripts\Kendo\Default\loading_2x.gif" />
+    <Content Include="Scripts\Kendo\Default\markers.png" />
+    <Content Include="Scripts\Kendo\Default\markers_2x.png" />
+    <Content Include="Scripts\Kendo\Default\slider-h.gif" />
+    <Content Include="Scripts\Kendo\Default\slider-v.gif" />
+    <Content Include="Scripts\Kendo\Default\sprite.png" />
+    <Content Include="Scripts\Kendo\Default\sprite_2x.png" />
+    <Content Include="Scripts\Kendo\Default\sprite_kpi.png" />
+    <Content Include="Scripts\Kendo\Default\sprite_kpi_2x.png" />
+    <Content Include="Scripts\Kendo\jquery.min.js" />
+    <Content Include="Scripts\Kendo\jszip.min.js" />
+    <Content Include="Scripts\Kendo\kendo.all.min.js" />
+    <Content Include="Scripts\Kendo\kendo.appbar.min.js" />
+    <Content Include="Scripts\Kendo\kendo.default-v2.min.css" />
+    <Content Include="Scripts\Kendo\kendo.default.min.css" />
+    <Content Include="Scripts\Kendo\license-agreements\EULA.txt" />
+    <Content Include="Scripts\Kendo\license-agreements\third-party\kendo-ui-for-jquery-NOTICE.txt" />
+    <Content Include="Scripts\Kendo\src\gulpfile.js" />
+    <Content Include="Scripts\Kendo\src\js\jquery.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -223,6 +249,17 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Book\Index.cshtml" />
+    <Content Include="Views\Book\Error.cshtml" />
+    <Content Include="Scripts\Kendo\kendo.appbar.min.js.map" />
+    <Content Include="Scripts\Kendo\kendo.all.min.js.map" />
+    <Content Include="Scripts\Kendo\jquery.min.map" />
+    <Content Include="Scripts\Kendo\kendo.default.min.css.map" />
+    <Content Include="Scripts\Kendo\kendo.default-v2.min.css.map" />
+    <Content Include="Scripts\Kendo\src\package.json" />
+    <Content Include="Scripts\Kendo\license-agreements\EULA.pdf" />
+    <Content Include="Scripts\Kendo\license-agreements\EULA.rtf" />
+    <Content Include="Scripts\Kendo\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

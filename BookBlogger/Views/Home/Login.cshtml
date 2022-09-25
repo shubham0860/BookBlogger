@@ -74,8 +74,8 @@
                         //grant_type: 'password'
                     },
 
-                    success: function () {
-
+                    success: function (res) {
+                        window.location.href = res.RedirectUrl;
                     },
                     // Display errors if any in the Bootstrap alert <div>
                     error: function (jqXHR) {

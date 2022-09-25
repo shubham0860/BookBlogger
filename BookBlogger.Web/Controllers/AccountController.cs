@@ -3,6 +3,8 @@ using BookBlogger.Models;
 using BookBlogger.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -19,7 +21,7 @@ namespace BookBlogger.Web.Controllers
     public class AccountController : ApiController
     {
         //private User _currentUser;
-        private BookBloggerEntities  bookBloggerEntities = new BookBloggerEntities();
+        private BooksBloggerEntities  bookBloggerEntities = new BooksBloggerEntities();
         private object varhashedBytes;
 
         //[System.Web.Http.Route("register")]
@@ -30,12 +32,14 @@ namespace BookBlogger.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                using (BookBloggerEntities entities = new BookBloggerEntities())
+                using (BooksBloggerEntities entities = new BooksBloggerEntities())
                 {
                     //var user = 
                     model.IsAdmin = false;
-                    model.CreatedDateTime = DateTime.Today;
-                    entities.uspAddUser(model.Username, model.Password, model.FirstName, model.LastName, model.IsAdmin, model.CreatedDateTime);
+                    //model.CreatedDateTime = DateTime.Today;
+                    ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
+
+                    entities.AddUser(model.Username, model.Password, model.FirstName, model.LastName, model.IsAdmin, responseMessage);
                     //entities.Users.Add(model);
                     entities.SaveChanges();   
                 }
@@ -45,11 +49,11 @@ namespace BookBlogger.Web.Controllers
 
         //[System.Web.Http.Route("login")]
         [HttpPost]
-        public void Login(UserLogin userLogin)
+        public HttpResponseMessage Login(UserLogin userLogin)
         {
             if (ModelState.IsValid)
             {
-                using (BookBloggerEntities entities = new BookBloggerEntities())
+                using (BooksBloggerEntities entities = new BooksBloggerEntities())
                 {
                     //var user = 
                     //var PassHash = userLogin.Password;
@@ -67,15 +71,28 @@ namespace BookBlogger.Web.Controllers
                             var UserId = _currentUser.ID;
                             //TODO: Redirect To Single app Page with this UserId
                             Debug.WriteLine("Success &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                            //Redirect("https://localhost:44302/Home/Contact");
+                            var newUrl = this.Url.Link("Default", new
+                            {
+                                Controller = "Book",
+                                Action = "Index"
+                            });
+                            return Request.CreateResponse(HttpStatusCode.OK,
+                                                     new { Success = true, RedirectUrl = newUrl });
                         }
-                        else
-                        {
-                            Console.WriteLine("Invalid");
-                        }
+
                     }
 
                 }
             }
+
+            var testUrl = this.Url.Link("Default", new
+            {
+                Controller = "Book",
+                Action = "Error"
+            });
+            return Request.CreateResponse(HttpStatusCode.OK,
+                                     new { Success = true, RedirectUrl = testUrl });
         }
     }
 }
