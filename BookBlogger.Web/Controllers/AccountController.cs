@@ -21,9 +21,12 @@ namespace BookBlogger.Web.Controllers
     public class AccountController : ApiController
     {
         //private User _currentUser;
-        private BooksBloggerEntities  bookBloggerEntities = new BooksBloggerEntities();
+        private BooksBloggerEntities  entities = new BooksBloggerEntities();
         private object varhashedBytes;
-
+        public AccountController()
+        {
+            this.entities = new BooksBloggerEntities();
+        }
         //[System.Web.Http.Route("register")]
         [HttpPost]
         public void Register(Users model)
@@ -32,7 +35,7 @@ namespace BookBlogger.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                using (BooksBloggerEntities entities = new BooksBloggerEntities())
+                using (entities)
                 {
                     //var user = 
                     model.IsAdmin = false;
@@ -46,6 +49,13 @@ namespace BookBlogger.Web.Controllers
             }
             // return View(model);
         }
+        //public IEnumerable<User> Get()
+        //{
+        //    using(BooksBloggerEntities entities = new BooksBloggerEntities())
+        //    {
+        //        return entities.Users.ToList();
+        //    }
+        //}
 
         //[System.Web.Http.Route("login")]
         [HttpPost]
@@ -53,7 +63,7 @@ namespace BookBlogger.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (BooksBloggerEntities entities = new BooksBloggerEntities())
+                using (entities)
                 {
                     //var user = 
                     //var PassHash = userLogin.Password;
@@ -72,12 +82,13 @@ namespace BookBlogger.Web.Controllers
                             //TODO: Redirect To Single app Page with this UserId
                             Debug.WriteLine("Success &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                             //Redirect("https://localhost:44302/Home/Contact");
+                            
                             var newUrl = this.Url.Link("Default", new
                             {
                                 Controller = "Book",
                                 Action = "Index"
                             });
-                            return Request.CreateResponse(HttpStatusCode.OK,
+                            return Request.CreateResponse(HttpStatusCode.Created,
                                                      new { Success = true, RedirectUrl = newUrl });
                         }
 
@@ -91,8 +102,8 @@ namespace BookBlogger.Web.Controllers
                 Controller = "Book",
                 Action = "Error"
             });
-            return Request.CreateResponse(HttpStatusCode.OK,
-                                     new { Success = true, RedirectUrl = testUrl });
+            return Request.CreateResponse(HttpStatusCode.Forbidden,
+                                     new { Success = false, RedirectUrl = testUrl });
         }
     }
 }

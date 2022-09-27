@@ -5,9 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f45b8bf6fc204b3b964dd12ca24f1ddd" Name="Diagram1">
-        <EntityTypeShape EntityType="BookBloggerModel.Audit" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookBloggerModel.EventLog" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BookBloggerModel.User" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookBloggerModel.Audit" Width="1.5" PointX="0.5" PointY="0.875" />
+        <EntityTypeShape EntityType="BookBloggerModel.Author" Width="1.5" PointX="2.25" PointY="6.75" />
+        <EntityTypeShape EntityType="BookBloggerModel.Book" Width="1.5" PointX="3.375" PointY="1.875" />
+        <EntityTypeShape EntityType="BookBloggerModel.Books_Authors" Width="1.5" PointX="7.5" PointY="1.875" />
+        <EntityTypeShape EntityType="BookBloggerModel.Users_Books" Width="1.5" PointX="4.625" PointY="5.5" />
+        <AssociationConnector Association="BookBloggerModel.FK_Books_Authors_AuthorID" />
+        <AssociationConnector Association="BookBloggerModel.FK_Books_Authors_BookID" />
+        <AssociationConnector Association="BookBloggerModel.FK_Books_BookID" />
+        <AssociationConnector Association="BookBloggerModel.FK_Users_UserID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -15,10 +15,11 @@ namespace BookBlogger.Data
     public partial class Audit
     {
         public int ID { get; set; }
-        public string Username { get; set; }
+        public int UserID { get; set; }
+        public int BookID { get; set; }
         public string Operation { get; set; }
-        public string BookName { get; set; }
-        public string TableName { get; set; }
+        public string NewValue { get; set; }
+        public string OldValue { get; set; }
         public Nullable<System.DateTime> CreatedDateTime { get; set; }
     }
 }

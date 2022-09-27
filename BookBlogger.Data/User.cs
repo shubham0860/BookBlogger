@@ -14,6 +14,12 @@ namespace BookBlogger.Data
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Users_Books = new HashSet<Users_Books>();
+        }
+    
         public int ID { get; set; }
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
@@ -21,5 +27,8 @@ namespace BookBlogger.Data
         public string LastName { get; set; }
         public bool IsAdmin { get; set; }
         public Nullable<System.DateTime> CreatedDateTime { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users_Books> Users_Books { get; set; }
     }
 }
