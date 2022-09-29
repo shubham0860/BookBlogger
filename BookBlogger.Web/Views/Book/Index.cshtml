@@ -1,44 +1,61 @@
-﻿<div id="grid"></div>
+﻿<input id="btnGrid" class="btn btn-success"
+       type="button" value="Submit" />
+
+<div id="grid"></div>
+<div id="Add"></div>
 <script>
+    $(document).ready(function () {
+        $("#btnGrid").click(function () {
+            $("#grid").toggle();
+        });
+    });
     $("#grid").kendoGrid({
         height: 400,
+        toolbar: ["create"],
         columns: [
-            {field: "ISBN"},
-            {field: "BookName"},
-            {field: "Price"},
-            {field: "Details"},
-            {field: "ImageUrl"},
-            {field: "DownloadUrl"},
-            {field:"AuthorName"},
-            {field: "CreatedDateTime"},
-            {field: "UpdatedDateTime"}
+            { field: "ISBN" },
+            { field: "BookName" },
+            { field: "Price" },
+            { field: "Details" },
+            { field: "ImageUrl" },
+            { field: "DownloadUrl" },
+            { field: "AuthorName" },
+            { field: "Surname" },
+            //{ field: "CreatedDateTime" },
+            //{ field: "UpdatedDateTime" },
+            { command: ["edit", "destroy"], width: 180 }
         ],
+
         dataSource: {
-            type: "webapi", 
+            type: "webapi",
             transport: {
                 idField: "ID",
                 read: {
-                     url: "/api/Books"
+                    url: "/api/Books"
+                },
+                create: {
+                    url: "api/Books"
                 }
-			},
+            },
             schema: {
                 data: "Data",
-                total: "Total", 
+                total: "Total",
                 errors: "Errors",
                 model: {
                     id: "ID",
-					fields: {
-						ID: { type: "number"},
-						ISBN: { type: "string"},
-						BookName: { type: "string"},
-						Price: { type: "number"},
-						Details: { type: "string"},
-						ImageUrl: { type: "string"},
+                    fields: {
+                        ID: { type: "number" },
+                        ISBN: { type: "string" },
+                        BookName: { type: "string" },
+                        Price: { type: "number" },
+                        Details: { type: "string" },
+                        ImageUrl: { type: "string" },
                         DownloadUrl: { type: "string" },
-                        AuthorName: { type:"string" },
-						CreatedDateTime: { type: "date"},
-						UpdatedDateTime: { type: "date"}
-					}
+                        AuthorName: { type: "string" },
+                        Surname: {type:"string"}
+                        //CreatedDateTime: { type: "date" },
+                        //UpdatedDateTime: { type: "date" }
+                    }
                 }
             },
             serverPaging: true,
@@ -47,8 +64,63 @@
             serverGrouping: true,
             serverAggregates: true,
         },
+        editable: "inline",
         pageable: true,
         scrollable: true
     })
 
 </script>
+@*<script>
+    $("#Add").kendoGrid({
+        height: 400,
+        columns: [
+            { field: "ISBN" },
+            { field: "BookName" },
+            { field: "Price" },
+            { field: "Details" },
+            { field: "ImageUrl" },
+            { field: "DownloadUrl" },
+            { field: "FirstName" },
+            { field: "LastName" },
+            { command: [], width: 180 }
+        ],
+        toolbar: ["create"],
+        dataSource: {
+            /*type: "aspnetmvc-ajax",*/
+            batch: true,
+            transport: {
+                //read: {
+                //    url: "Books_Read"
+                //},
+                create: {
+                    url: "api/books/AddBooks"
+                }
+            },
+            schema: {
+                data: "Data",
+                model: {
+                    id: "ID",
+                    fields: {
+                        ID: { type: "number" },
+                        ISBN: { type: "string" },
+                        BookName: { type: "string" },
+                        Price: { type: "number" },
+                        Details: { type: "string" },
+                        ImageUrl: { type: "string" },
+                        DownloadUrl: { type: "string" },
+                        FirstName: { type: "string" },
+                        LastName: {type:"string"}
+                    }
+                }
+            },
+        },
+        editable: "incell",
+        /*save: onSave,*/
+        scrollable: false
+    })
+
+    //function onSave(e) {
+    //    //Implement the event handler for save
+    //}
+
+</script>*@

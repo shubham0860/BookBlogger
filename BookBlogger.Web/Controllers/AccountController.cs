@@ -23,6 +23,7 @@ namespace BookBlogger.Web.Controllers
         //private User _currentUser;
         private BooksBloggerEntities  entities = new BooksBloggerEntities();
         private object varhashedBytes;
+        public static int UserId;
         public AccountController()
         {
             this.entities = new BooksBloggerEntities();
@@ -78,7 +79,7 @@ namespace BookBlogger.Web.Controllers
                         var _currentUser = entities.Users.FirstOrDefault(user => user.Username == userLogin.Username && user.PasswordHash == varhashedBytes);
                         if (_currentUser != null)
                         {
-                            var UserId = _currentUser.ID;
+                            UserId = _currentUser.ID;
                             //TODO: Redirect To Single app Page with this UserId
                             Debug.WriteLine("Success &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                             //Redirect("https://localhost:44302/Home/Contact");

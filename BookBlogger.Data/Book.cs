@@ -19,6 +19,7 @@ namespace BookBlogger.Data
         {
             this.Books_Authors = new HashSet<Books_Authors>();
             this.Users_Books = new HashSet<Users_Books>();
+            this.ID = ID;
         }
     
         public int ID { get; set; }

@@ -21,6 +21,7 @@ namespace BookBlogger.Data
         public string ImageUrl { get; set; }
         public string DownloadUrl { get; set; }
         public string AuthorName { get; set; }
+        public string Surname { get; set; }
         public Nullable<System.DateTime> CreatedDateTime { get; set; }
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
     }
