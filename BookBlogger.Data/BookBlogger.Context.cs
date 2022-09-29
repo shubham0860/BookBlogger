@@ -33,6 +33,7 @@ namespace BookBlogger.Data
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Books_Authors> Books_Authors { get; set; }
         public virtual DbSet<Users_Books> Users_Books { get; set; }
+        public virtual DbSet<BookView> BookViews { get; set; }
     
         public virtual int AddUser(string username, string password, string firstName, string lastName, Nullable<bool> isAdmin, ObjectParameter responseMessage)
         {

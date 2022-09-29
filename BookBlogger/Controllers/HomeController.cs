@@ -11,7 +11,9 @@ namespace BookBlogger.Controllers
     {
         public ActionResult Register()
         {
+            //return View();
             return View();
+
         }
 
         public ActionResult Login(UserLogin userLogin)

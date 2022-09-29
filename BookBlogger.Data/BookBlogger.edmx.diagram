@@ -15,6 +15,7 @@
         <AssociationConnector Association="BookBloggerModel.FK_Books_Authors_BookID" />
         <AssociationConnector Association="BookBloggerModel.FK_Books_BookID" />
         <AssociationConnector Association="BookBloggerModel.FK_Users_UserID" />
+        <EntityTypeShape EntityType="BookBloggerModel.BookView" Width="1.5" PointX="7.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

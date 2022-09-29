@@ -92,6 +92,9 @@
     <Compile Include="Books_Authors.cs">
       <DependentUpon>BookBlogger.tt</DependentUpon>
     </Compile>
+    <Compile Include="BookView.cs">
+      <DependentUpon>BookBlogger.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadBooks_Result.cs">
       <DependentUpon>BookBlogger.tt</DependentUpon>

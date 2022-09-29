@@ -1,83 +1,54 @@
-﻿@*@model BookBlogger.Data.Book*@
-
-<div id="app"></div>
-
-<script type="text/javascript">
-/*const { src } = require("vinyl-fs");*/
-
-
-    $(document).ready(function () {
-
-        function GetData() {
-            $.ajax({
-                url: 'https://localhost:44367/api/data/Get',
-                type: 'Get',
-                crossDomain: 'true',
-                success: function (response) {
-                    //var x = JSON.stringify(data);
-                    //$('#app').text(x);
-                    var Model = response[0];
-                    //var x = parseJSON(data);
-                    $('.k-card-header').text(Model.BookName);
-                    /*$('').prop(src: Model.ImageUrl);*/
-                    var img = $('<img id="image_id">');
-                    img.attr('src',Model.ImageUrl);
-                    img.appendTo('.k-card-image');
-                },
-                error: function (jqXHR) {
-                    $('#divErrorText').text(jqXHR.responseText);
-                    $('#divError').show('fade');
+﻿<div id="grid"></div>
+<script>
+    $("#grid").kendoGrid({
+        height: 400,
+        columns: [
+            {field: "ISBN"},
+            {field: "BookName"},
+            {field: "Price"},
+            {field: "Details"},
+            {field: "ImageUrl"},
+            {field: "DownloadUrl"},
+            {field:"AuthorName"},
+            {field: "CreatedDateTime"},
+            {field: "UpdatedDateTime"}
+        ],
+        dataSource: {
+            type: "webapi", 
+            transport: {
+                idField: "ID",
+                read: {
+                     url: "/api/Books"
                 }
-            });
-        }
-        GetData();
-        //$('#app').text(x);
-    });
+			},
+            schema: {
+                data: "Data",
+                total: "Total", 
+                errors: "Errors",
+                model: {
+                    id: "ID",
+					fields: {
+						ID: { type: "number"},
+						ISBN: { type: "string"},
+						BookName: { type: "string"},
+						Price: { type: "number"},
+						Details: { type: "string"},
+						ImageUrl: { type: "string"},
+                        DownloadUrl: { type: "string" },
+                        AuthorName: { type:"string" },
+						CreatedDateTime: { type: "date"},
+						UpdatedDateTime: { type: "date"}
+					}
+                }
+            },
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            serverGrouping: true,
+            serverAggregates: true,
+        },
+        pageable: true,
+        scrollable: true
+    })
 
 </script>
-
-<style>
-    .cards-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .k-card {
-        width: 285px;
-        margin: 5%;
-    }
-
-    .k-card-footer {
-        text-align: center;
-    }
-
-    .k-card-action > .k-button {
-        width: 100%;
-    }
-</style>
-
-<body>
-    <div class="cards-container">
-        <div class="k-card">
-            <div class="k-card-header">
-                <h5 class="k-card-title">BookName</h5>
-                <h6 class="k-card-subtitle">Capital of Italy</h6>
-            </div>
-            <img class="k-card-image" src="../content/web/cards/rome.jpg" />
-            <div class="k-card-body">
-                <p>Rome is a sprawling, cosmopolitan city with nearly 3,000 years of globally influential art, architecture and culture on display.</p>
-                <p>Ancient ruins such as the Forum and the Colosseum evoke the power of the former Roman Empire. </p>
-            </div>
-            <div class="k-card-footer">
-                <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-facebook"></span></a>
-                <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-pinterest"></span></a>
-                <a class="k-button k-button-flat-base k-button-flat k-button-md k-rounded-md k-icon-button"><span class="k-button-icon k-icon k-i-twitter"></span></a>
-            </div>
-            <div class="k-card-actions k-card-actions-stretched">
-                <span class="k-card-action"><span class="k-button k-button-flat-primary k-button-flat k-button-md k-rounded-md">Map</span></span>
-                <span class="k-card-action"><span class="k-button k-button-flat-primary k-button-flat k-button-md k-rounded-md">Weather</span></span>
-            </div>
-        </div>
-        </div>
-</body>

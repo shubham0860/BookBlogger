@@ -10,8 +10,9 @@
 namespace BookBlogger.Data
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class ReadBooks_Result
+    public partial class BookView
     {
         public int ID { get; set; }
         public string ISBN { get; set; }

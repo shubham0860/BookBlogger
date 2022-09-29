@@ -75,6 +75,25 @@ warning 6002: The table/view 'BookBlogger.dbo.Users_Books' does not have a prima
           <Property Name="BookID" Type="int" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BookView">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ISBN" />
+            <PropertyRef Name="BookName" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ISBN" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="BookName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="7" Scale="2" />
+          <Property Name="Details" Type="varchar" MaxLength="255" />
+          <Property Name="ImageUrl" Type="varchar" MaxLength="150" />
+          <Property Name="DownloadUrl" Type="varchar" MaxLength="150" />
+          <Property Name="AuthorName" Type="varchar" MaxLength="81" />
+          <Property Name="CreatedDateTime" Type="datetime" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+        </EntityType>
         <Association Name="FK_Books_Authors_AuthorID">
           <End Role="Authors" Type="Self.Authors" Multiplicity="1" />
           <End Role="Books_Authors" Type="Self.Books_Authors" Multiplicity="*" />
@@ -172,6 +191,20 @@ warning 6002: The table/view 'BookBlogger.dbo.Users_Books' does not have a prima
     [Users_Books].[CreatedDateTime] AS [CreatedDateTime]
     FROM [dbo].[Users_Books] AS [Users_Books]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="BookView" EntityType="Self.BookView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BookView].[ID] AS [ID], 
+    [BookView].[ISBN] AS [ISBN], 
+    [BookView].[BookName] AS [BookName], 
+    [BookView].[Price] AS [Price], 
+    [BookView].[Details] AS [Details], 
+    [BookView].[ImageUrl] AS [ImageUrl], 
+    [BookView].[DownloadUrl] AS [DownloadUrl], 
+    [BookView].[AuthorName] AS [AuthorName], 
+    [BookView].[CreatedDateTime] AS [CreatedDateTime], 
+    [BookView].[UpdatedDateTime] AS [UpdatedDateTime]
+    FROM [dbo].[BookView] AS [BookView]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Books_Authors_AuthorID" Association="Self.FK_Books_Authors_AuthorID">
             <End Role="Authors" EntitySet="Authors" />
             <End Role="Books_Authors" EntitySet="Books_Authors" />
@@ -259,6 +292,13 @@ warning 6002: The table/view 'BookBlogger.dbo.Users_Books' does not have a prima
           <FunctionImport Name="ReadBooks" ReturnType="Collection(BookBloggerModel.ReadBooks_Result)">
           <Parameter Name="responseMessage" Mode="InOut" Type="String" />
           </FunctionImport>
+          <EntitySet Name="BookViews" EntityType="BookBloggerModel.BookView" />
+          <!--<FunctionImport Name="ReadBooks" ReturnType="Collection(BookBloggerModel.ReadBooks_Result)">
+          <Parameter Name="responseMessage" Mode="InOut" Type="String" />
+          </FunctionImport>-->
+          <!--<FunctionImport Name="ReadBook" ReturnType="Collection(BookBloggerModel.ReadBook_Result)">
+          <Parameter Name="responseMessage" Mode="InOut" Type="String" />
+          </FunctionImport>-->
         </EntityContainer>
         <EntityType Name="Audit">
           <Key>
@@ -373,13 +413,54 @@ warning 6002: The table/view 'BookBlogger.dbo.Users_Books' does not have a prima
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="ISBN" Nullable="false" MaxLength="60" />
           <Property Type="String" Name="BookName" Nullable="false" MaxLength="40" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="7" Scale="2" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ImageUrl" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="DownloadUrl" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="AuthorName" Nullable="true" MaxLength="81" />
+          <Property Type="DateTime" Name="CreatedDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="BookView">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ISBN" />
+            <PropertyRef Name="BookName" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ISBN" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="BookName" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="Details" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DownloadUrl" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorName" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <!--<ComplexType Name="ReadBooks_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ISBN" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="BookName" Nullable="false" MaxLength="40" />
           <Property Type="Decimal" Name="Price" Nullable="true" Precision="4" Scale="3" />
           <Property Type="String" Name="Details" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="ImageUrl" Nullable="true" MaxLength="150" />
           <Property Type="String" Name="DownloadUrl" Nullable="true" MaxLength="150" />
           <Property Type="DateTime" Name="CreatedDateTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
-        </ComplexType>
+        </ComplexType>-->
+        <!--<ComplexType Name="ReadBook_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ISBN" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="BookName" Nullable="false" MaxLength="40" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="7" Scale="2" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ImageUrl" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="DownloadUrl" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Column1" Nullable="true" MaxLength="81" />
+          <Property Type="DateTime" Name="CreatedDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>-->
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -469,11 +550,59 @@ warning 6002: The table/view 'BookBlogger.dbo.Users_Books' does not have a prima
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
                 <ScalarProperty Name="DownloadUrl" ColumnName="DownloadUrl" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="BookViews">
+            <EntityTypeMapping TypeName="BookBloggerModel.BookView">
+              <MappingFragment StoreEntitySet="BookView">
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="DownloadUrl" ColumnName="DownloadUrl" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <!--<FunctionImportMapping FunctionImportName="ReadBooks" FunctionName="BookBloggerModel.Store.ReadBooks">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookBloggerModel.ReadBooks_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="DownloadUrl" ColumnName="DownloadUrl" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>-->
+          <!--<FunctionImportMapping FunctionImportName="ReadBook" FunctionName="BookBloggerModel.Store.ReadBook">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookBloggerModel.ReadBook_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="DownloadUrl" ColumnName="DownloadUrl" />
+                <ScalarProperty Name="Column1" ColumnName="Column1" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>-->
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

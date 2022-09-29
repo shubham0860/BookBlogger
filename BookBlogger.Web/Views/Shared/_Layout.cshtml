@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -12,7 +13,16 @@
 
     @Scripts.Render("~/Kendo")
 
+    <link href="~/Kendo/styles/kendo.default-v2.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    @*<script src="~/Kendo/js/jquery.min.js"></script>
 
+    <script src="~/Kendo/js/jszip.min.js"></script>
+
+    <script src="~/Kendo/js/kendo.all.min.js"></script>
+    <script src="~/Kendo/js/kendo.angular.min.js"></script>
+    <script src="~/Kendo/js/kendo.appbar.min.js"></script>
+    <script src="~/Kendo/js/kendo.actionsheet.min.js"></script>*@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
