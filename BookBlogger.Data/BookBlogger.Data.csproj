@@ -99,6 +99,9 @@
     <Compile Include="ReadBooks_Result.cs">
       <DependentUpon>BookBlogger.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReadBook_Result.cs">
+      <DependentUpon>BookBlogger.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>BookBlogger.tt</DependentUpon>
     </Compile>

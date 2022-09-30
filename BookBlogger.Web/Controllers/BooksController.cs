@@ -22,7 +22,25 @@ namespace BookBlogger.Web.Controllers
             ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
 
             var book = db.ReadBooks(responseMessage).ToList();
+            
             return book.ToDataSourceResult(request);
+        }
+
+        [Route("api/books/UserBooks")]
+        [HttpGet]
+        public DataSourceResult UserBooks([ModelBinder(typeof(WebApiDataSourceRequestModelBinder))] DataSourceRequest request)
+        {
+            ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
+
+            var book = db.ReadBook(AccountController.UserId, responseMessage).ToList();
+
+            return book.ToDataSourceResult(request);
+        }
+        [Route("api/books/GetAudit")]
+        [HttpGet]
+        public DataSourceResult GetAudits([System.Web.Http.ModelBinding.ModelBinder(typeof(WebApiDataSourceRequestModelBinder))] DataSourceRequest request)
+        {
+            return db.Audits.ToDataSourceResult(request);
         }
 
         //public Book GetBook(int id)
@@ -95,6 +113,7 @@ namespace BookBlogger.Web.Controllers
 
         public HttpResponseMessage DeleteBook(int id)
         {
+            var response = new HttpResponseMessage();
             var user = AccountController.UserId;
             var isAdmin = db.Users.Find(user).IsAdmin;
             Book book = db.Books.Find(id);
@@ -116,7 +135,10 @@ namespace BookBlogger.Web.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, book);
             }
-            return Request.CreateResponse(HttpStatusCode.Forbidden, book);
+            //response.StatusCode = HttpStatusCode.Forbidden;
+            //response.Content = new StringContent(string.Format("Deletion Failed"));
+            return Request.CreateResponse(HttpStatusCode.Unauthorized, book);
+            //return response;
         }
 
         protected override void Dispose(bool disposing)

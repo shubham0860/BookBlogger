@@ -188,6 +188,10 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
           <Parameter Name="Surname" Type="varchar" Mode="In" />
           <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
         </Function>
+        <Function Name="ReadBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+        </Function>
         <Function Name="ReadBooks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
         </Function>
@@ -331,6 +335,10 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
             <Parameter Name="BookID" Mode="In" Type="Int32" />
             <Parameter Name="responseMessage" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ReadBook" ReturnType="Collection(BookBloggerModel.ReadBook_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="responseMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
           <!--<FunctionImport Name="ReadBooks" ReturnType="Collection(BookBloggerModel.ReadBooks_Result)">
           <Parameter Name="responseMessage" Mode="InOut" Type="String" />
           </FunctionImport>-->
@@ -470,6 +478,19 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
           <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <ComplexType Name="ReadBooks_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ISBN" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="BookName" Nullable="false" MaxLength="40" />
+          <Property Type="Decimal" Name="Price" Nullable="true" Precision="7" Scale="2" />
+          <Property Type="String" Name="Details" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ImageUrl" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="DownloadUrl" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="AuthorName" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="Surname" Nullable="true" MaxLength="40" />
+          <Property Type="DateTime" Name="CreatedDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="ReadBook_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="ISBN" Nullable="false" MaxLength="60" />
           <Property Type="String" Name="BookName" Nullable="false" MaxLength="40" />
@@ -649,6 +670,23 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="EditBook" FunctionName="BookBloggerModel.Store.EditBook" />
           <FunctionImportMapping FunctionImportName="DeleteBook" FunctionName="BookBloggerModel.Store.DeleteBook" />
+          <FunctionImportMapping FunctionImportName="ReadBook" FunctionName="BookBloggerModel.Store.ReadBook">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookBloggerModel.ReadBook_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="DownloadUrl" ColumnName="DownloadUrl" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <!--<FunctionImportMapping FunctionImportName="ReadBooks" FunctionName="BookBloggerModel.Store.ReadBooks">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BookBloggerModel.ReadBooks_Result">

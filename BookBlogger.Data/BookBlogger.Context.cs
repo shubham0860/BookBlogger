@@ -188,5 +188,14 @@ namespace BookBlogger.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteBook", userIDParameter, bookIDParameter, responseMessage);
         }
+    
+        public virtual ObjectResult<ReadBook_Result> ReadBook(Nullable<int> userID, ObjectParameter responseMessage)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReadBook_Result>("ReadBook", userIDParameter, responseMessage);
+        }
     }
 }

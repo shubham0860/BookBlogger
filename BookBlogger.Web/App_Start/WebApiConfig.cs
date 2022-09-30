@@ -26,12 +26,6 @@ namespace BookBlogger.Web
                 defaults: new { controller = "books", id = RouteParameter.Optional }
             );
 
-            //config.Routes.MapHttpRoute(
-            // name: "DefaultApi1",
-            // routeTemplate: "api/{controller}/{action}",
-            // defaults: new {controller = "account",action= RouteParameter.Optional }
-            // );
-
 
             EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
