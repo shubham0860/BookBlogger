@@ -35,7 +35,15 @@
                 },
                 create: {
                     url: "api/Books"
+                },
+                update: {
+                    url: "/api/Books/{0}"
+                },
+                delete: {
+                    url: "api/Books/{0}"
                 }
+                
+
             },
             schema: {
                 data: "Data",
@@ -65,6 +73,7 @@
             serverAggregates: true,
         },
         editable: "inline",
+        
         pageable: true,
         scrollable: true
     })

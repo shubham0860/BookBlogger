@@ -1,6 +1,7 @@
 ﻿using BookBlogger.Data;
 using BookBlogger.Models;
 using BookBlogger.Web.Models;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -14,10 +15,22 @@ using System.Text;
 using System.Web.Http;
 using System.Web.Mvc;
 using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
+using RouteAttribute = System.Web.Http.RouteAttribute;
+using RoutePrefixAttribute = System.Web.Mvc.RoutePrefixAttribute;
+using Microsoft.Web;
+using Microsoft.Web.Http;
+using System.Web.Http.Cors;
 
 namespace BookBlogger.Web.Controllers
 {
-    //[System.Web.Mvc.RoutePrefix("api/account")]
+
+    //[ApiVersion("1.0")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*", exposedHeaders: "Access-Control-Allow-Origin")]
+
+    //[RoutePrefixAttribute("api/account")]
+    //[Route("DefaultApi1")]
+    //[FallbackRoute("DefaultApi1")]
+    //[ControllerName("account")]
     public class AccountController : ApiController
     {
         //private User _currentUser;
@@ -28,7 +41,9 @@ namespace BookBlogger.Web.Controllers
         {
             this.entities = new BooksBloggerEntities();
         }
-        //[System.Web.Http.Route("register")]
+
+        [Route("api/account/register")]
+        
         [HttpPost]
         public void Register(Users model)
         {
@@ -58,8 +73,13 @@ namespace BookBlogger.Web.Controllers
         //    }
         //}
 
-        //[System.Web.Http.Route("login")]
+        //[Route("Login")]
+
+        [Route("api/account/login")]
+
+        //[System.Web.Http.ActionName("reglog")]
         [HttpPost]
+        
         public HttpResponseMessage Login(UserLogin userLogin)
         {
             if (ModelState.IsValid)

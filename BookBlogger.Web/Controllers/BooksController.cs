@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web.Http.ModelBinding;
 using BookBlogger.Web.Models;
 using System;
+using System.Data.Entity.Infrastructure;
 
 namespace BookBlogger.Web.Controllers
 {
@@ -24,16 +25,16 @@ namespace BookBlogger.Web.Controllers
             return book.ToDataSourceResult(request);
         }
 
-        public Book GetBook(int id)
-        {
-            Book book = db.Books.Find(id);
-            if(book == null)
-            {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
-            }
+        //public Book GetBook(int id)
+        //{
+        //    Book book = db.Books.Find(id);
+        //    if(book == null)
+        //    {
+        //        throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+        //    }
 
-            return book;
-        }
+        //    return book;
+        //}
 
         public HttpResponseMessage PostBook(Books books)
         {
@@ -55,7 +56,7 @@ namespace BookBlogger.Web.Controllers
                 
                 var Id = (from record in db.Books orderby record.ID descending select record.ID).First();
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, result);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi1", new { controller= "Books",id = Id }));
+                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { controller= "Books",id = Id }));
 
                 return response;
             }
@@ -65,31 +66,58 @@ namespace BookBlogger.Web.Controllers
             }
         }
 
-        //public HttpResponseMessage PutBook(int id, Book book)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-        //    }
+        public HttpResponseMessage PutBook(int id, Books books)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
 
-        //    if (id != book.ID)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest);
-        //    }
+            if (id != books.ID)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
 
-        //    try
-        //    {
-        //        db.Entry(book).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException ex)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
-        //    }
+            try
+            {
+                //db.Entry(book).State = EntityState.Modified;
+                ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
+                db.EditBook(AccountController.UserId, id, books.ISBN, books.BookName, books.Price, books.Details, books.ImageUrl, books.DownloadUrl, books.AuthorName, books.Surname, responseMessage);
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+            }
 
-        //    return Request.CreateResponse(HttpStatusCode.OK);
-        //}
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
 
+        public HttpResponseMessage DeleteBook(int id)
+        {
+            var user = AccountController.UserId;
+            var isAdmin = db.Users.Find(user).IsAdmin;
+            Book book = db.Books.Find(id);
+            if (isAdmin)
+            {
+                try
+                {
+                    //db.Books.Remove(book);
+                    ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
+
+                    db.DeleteBook(user, id, responseMessage);
+                    
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, book);
+            }
+            return Request.CreateResponse(HttpStatusCode.Forbidden, book);
+        }
 
         protected override void Dispose(bool disposing)
         {

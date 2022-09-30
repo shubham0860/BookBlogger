@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Web.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -11,21 +12,27 @@ namespace BookBlogger.Web
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            //config. IgnoreRoute(“{ resource}.axd /{ *pathInfo}”);
 
+            //routes.MapMvcAttributeRoutes();
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional , action = RouteParameter.Optional}
-            );
+
 
             config.Routes.MapHttpRoute(
-              name: "DefaultApi1",
-              routeTemplate: "api/{controller}/{id}",
-              defaults: new { id = RouteParameter.Optional }
-              );
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { controller = "books", id = RouteParameter.Optional }
+            );
+
+            //config.Routes.MapHttpRoute(
+            // name: "DefaultApi1",
+            // routeTemplate: "api/{controller}/{action}",
+            // defaults: new {controller = "account",action= RouteParameter.Optional }
+            // );
+
+
             EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
         }

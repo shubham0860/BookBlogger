@@ -170,6 +170,24 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
           <Parameter Name="IsAdmin" Type="bit" Mode="In" />
           <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
         </Function>
+        <Function Name="DeleteBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BookID" Type="int" Mode="In" />
+          <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="EditBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BookID" Type="int" Mode="In" />
+          <Parameter Name="ISBN" Type="varchar" Mode="In" />
+          <Parameter Name="BookName" Type="varchar" Mode="In" />
+          <Parameter Name="Price" Type="decimal" Mode="In" />
+          <Parameter Name="Details" Type="varchar" Mode="In" />
+          <Parameter Name="ImageUrl" Type="varchar" Mode="In" />
+          <Parameter Name="DownloadUrl" Type="varchar" Mode="In" />
+          <Parameter Name="AuthorName" Type="varchar" Mode="In" />
+          <Parameter Name="Surname" Type="varchar" Mode="In" />
+          <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+        </Function>
         <Function Name="ReadBooks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
         </Function>
@@ -294,6 +312,24 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
           <EntitySet Name="BookViews" EntityType="BookBloggerModel.BookView" />
           <FunctionImport Name="ReadBooks" ReturnType="Collection(BookBloggerModel.ReadBooks_Result)">
           <Parameter Name="responseMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EditBook">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BookID" Mode="In" Type="Int32" />
+            <Parameter Name="ISBN" Mode="In" Type="String" />
+            <Parameter Name="BookName" Mode="In" Type="String" />
+            <Parameter Name="Price" Mode="In" Type="Decimal" />
+            <Parameter Name="Details" Mode="In" Type="String" />
+            <Parameter Name="ImageUrl" Mode="In" Type="String" />
+            <Parameter Name="DownloadUrl" Mode="In" Type="String" />
+            <Parameter Name="AuthorName" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+            <Parameter Name="responseMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteBook">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BookID" Mode="In" Type="Int32" />
+            <Parameter Name="responseMessage" Mode="InOut" Type="String" />
           </FunctionImport>
           <!--<FunctionImport Name="ReadBooks" ReturnType="Collection(BookBloggerModel.ReadBooks_Result)">
           <Parameter Name="responseMessage" Mode="InOut" Type="String" />
@@ -611,6 +647,8 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EditBook" FunctionName="BookBloggerModel.Store.EditBook" />
+          <FunctionImportMapping FunctionImportName="DeleteBook" FunctionName="BookBloggerModel.Store.DeleteBook" />
           <!--<FunctionImportMapping FunctionImportName="ReadBooks" FunctionName="BookBloggerModel.Store.ReadBooks">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BookBloggerModel.ReadBooks_Result">

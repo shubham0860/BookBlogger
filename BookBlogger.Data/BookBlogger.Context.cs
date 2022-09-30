@@ -130,5 +130,63 @@ namespace BookBlogger.Data
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReadBooks_Result>("ReadBooks", responseMessage);
         }
+    
+        public virtual int EditBook(Nullable<int> userID, Nullable<int> bookID, string iSBN, string bookName, Nullable<decimal> price, string details, string imageUrl, string downloadUrl, string authorName, string surname, ObjectParameter responseMessage)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bookIDParameter = bookID.HasValue ?
+                new ObjectParameter("BookID", bookID) :
+                new ObjectParameter("BookID", typeof(int));
+    
+            var iSBNParameter = iSBN != null ?
+                new ObjectParameter("ISBN", iSBN) :
+                new ObjectParameter("ISBN", typeof(string));
+    
+            var bookNameParameter = bookName != null ?
+                new ObjectParameter("BookName", bookName) :
+                new ObjectParameter("BookName", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("Price", price) :
+                new ObjectParameter("Price", typeof(decimal));
+    
+            var detailsParameter = details != null ?
+                new ObjectParameter("Details", details) :
+                new ObjectParameter("Details", typeof(string));
+    
+            var imageUrlParameter = imageUrl != null ?
+                new ObjectParameter("ImageUrl", imageUrl) :
+                new ObjectParameter("ImageUrl", typeof(string));
+    
+            var downloadUrlParameter = downloadUrl != null ?
+                new ObjectParameter("DownloadUrl", downloadUrl) :
+                new ObjectParameter("DownloadUrl", typeof(string));
+    
+            var authorNameParameter = authorName != null ?
+                new ObjectParameter("AuthorName", authorName) :
+                new ObjectParameter("AuthorName", typeof(string));
+    
+            var surnameParameter = surname != null ?
+                new ObjectParameter("Surname", surname) :
+                new ObjectParameter("Surname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditBook", userIDParameter, bookIDParameter, iSBNParameter, bookNameParameter, priceParameter, detailsParameter, imageUrlParameter, downloadUrlParameter, authorNameParameter, surnameParameter, responseMessage);
+        }
+    
+        public virtual int DeleteBook(Nullable<int> userID, Nullable<int> bookID, ObjectParameter responseMessage)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var bookIDParameter = bookID.HasValue ?
+                new ObjectParameter("BookID", bookID) :
+                new ObjectParameter("BookID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteBook", userIDParameter, bookIDParameter, responseMessage);
+        }
     }
 }
