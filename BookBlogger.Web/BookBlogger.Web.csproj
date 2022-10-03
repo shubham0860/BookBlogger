@@ -308,12 +308,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookBloggerController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Books.cs" />
+    <Compile Include="Models\userLogin.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -4019,6 +4021,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\Book\Audit.cshtml" />
+    <Content Include="Views\BookBlogger\Register.cshtml" />
+    <Content Include="Views\BookBlogger\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4056,10 +4060,6 @@
     <ProjectReference Include="..\BookBlogger.Data\BookBlogger.Data.csproj">
       <Project>{C6621605-75AC-4B52-9160-D152CD2C67C7}</Project>
       <Name>BookBlogger.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BookBlogger\BookBlogger.csproj">
-      <Project>{8CE0EDAD-14F8-4510-AAB0-25D129F30F52}</Project>
-      <Name>BookBlogger</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

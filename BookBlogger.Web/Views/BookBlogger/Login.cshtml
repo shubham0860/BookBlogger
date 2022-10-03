@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+<div class="demo-section">
+    <div id="validation-success"></div>
+    @(Html.Kendo().Form<BookBlogger.Web.Models.UserLogin>()
+        .Name("login")
+        .HtmlAttributes(new { controller = "Account", action = "register", method = "POST" })
+
+        .Validatable(v =>
+        {
+            v.ValidateOnBlur(true);
+            v.ValidationSummary(vs => vs.Enable(false));
+        })
+        .Items(items =>
+        {
+            items.AddGroup()
+                .Label("Registration Form")
+                .Items(i =>
+                {
+                    i.Add()
+                        .Field(f => f.Username)
+                        .Id("txtUsername")
+                        .Label(l => l.Text("Username:"));
+                    i.Add()
+                        .Field(f => f.Password)
+                        .Label(l => l.Text("Password:"))
+                        .Id("txtPassword")
+                        .Hint("Hint: enter alphanumeric characters only.")
+                        .EditorTemplateHandler("setPasswordEditor");
+                });
+        })
+        .Events(ev => ev.ValidateField("onFormValidateField").Submit("onFormSubmit").Clear("onFormClear"))
+    )
+</div>
+
+<script>
+    function setPasswordEditor(container, options) {
+        $('<input type="password" id="Password" name="' + options.field + '" title="Password" required="required" autocomplete="off" aria-labelledby="Password-form-label" data-bind="value: Password" aria-describedby="Password-form-hint"/>')
+            .appendTo(container)
+            .kendoTextBox();
+    }
+
+    function onFormValidateField(e) {
+        $("#validation-success").html("");
+    }
+
+    function onFormSubmit(e) {
+        e.preventDefault();
+        $("#validation-success").html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+
+                $.ajax({
+                    url: 'https://localhost:44367/api/account/login',
+                    method: 'POST',
+                    data: {
+                        username: $('#txtUsername').val(),
+                        password: $('#Password').val(),
+                    },
+                    success: function (res) {
+                        window.location.href = res.RedirectUrl;
+                    },
+                    error: function () {
+                    },
+                
+            
+            error: function (jqXHR) {
+                //$('#divErrorText').text(jqXHR.responseText);
+                //$('#divError').show('fade');
+                $("#validation-success").html("<div class='k-messagebox k-messagebox-success'>Wrong Password or Username</div>");
+            }
+        });
+    }
+
+    function onFormClear(e) {
+        $("#validation-success").html("");
+    }
+</script>
+

@@ -1,5 +1,4 @@
 ﻿using BookBlogger.Data;
-using BookBlogger.Models;
 using BookBlogger.Web.Models;
 using System;
 using System.Data.Entity.Core.Objects;
@@ -50,7 +49,7 @@ namespace BookBlogger.Web.Controllers
         [Route("api/account/login")]
         [HttpPost]
         
-        public HttpResponseMessage Login(UserLogin userLogin)
+        public HttpResponseMessage Login(Users userLogin)
         {
             if (ModelState.IsValid)
             {

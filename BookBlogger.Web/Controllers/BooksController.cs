@@ -106,7 +106,7 @@ namespace BookBlogger.Web.Controllers
 
         public HttpResponseMessage DeleteBook(Books books)
         {
-            var response = new HttpResponseMessage();
+            //var response = new HttpResponseMessage();
             var user = AccountController.UserId;
             var isAdmin = db.Users.Find(user).IsAdmin;
             Book book = db.Books.Find(books.ID);
