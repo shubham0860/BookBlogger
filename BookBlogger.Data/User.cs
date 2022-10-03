@@ -11,7 +11,8 @@ namespace BookBlogger.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +22,7 @@ namespace BookBlogger.Data
         }
     
         public int ID { get; set; }
+
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public string FirstName { get; set; }

@@ -11,28 +11,13 @@ namespace BookBlogger.Controllers
     {
         public ActionResult Register()
         {
-            //return View();
             return View();
-
         }
 
         public ActionResult Login(UserLogin userLogin)
         {
-            ViewBag.Message = "Your application description page.";
-
-            if(userLogin != null)
-            {
-                //TODO Redirect To Single Page with these Login Info.
-
-            }
+            ViewBag.Message = "Please Login";
                 return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }
