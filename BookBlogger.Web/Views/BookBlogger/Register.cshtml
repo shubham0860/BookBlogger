@@ -18,20 +18,23 @@
         .Items(items =>
         {
             items.AddGroup()
-                .Label("Registration Form")
+                .Label("Enter Your Informations For Registration")
                 .Items(i =>
                 {
                     i.Add()
                          .Field(f => f.FirstName)
                          .Id("txtFirstName")
+                         .EditorTemplateHandler("setFirstNameEditor")
                          .Label(l => l.Text("First Name:"));
                     i.Add()
                         .Field(f => f.LastName)
                         .Id("txtLastName")
+                        .EditorTemplateHandler("setLastNameEditor")
                         .Label(l => l.Text("Last Name:"));
                     i.Add()
                         .Field(f => f.Username)
                         .Id("txtUsername")
+                        .EditorTemplateHandler("setUsernameEditor")
                         .Label(l => l.Text("Username:"));
                     i.Add()
                         .Field(f => f.Password)
@@ -44,10 +47,31 @@
         .Events(ev => ev.ValidateField("onFormValidateField").Submit("onFormSubmit").Clear("onFormClear"))
     )
 </div>
+<div>
+    <ul class="btn btn-info">
+        <li>@Html.ActionLink("Login", "Login", "BookBlogger", new { area = "" }, null)</li>
+    </ul>
+</div>
 
 <script>
     function setPasswordEditor(container, options) {
         $('<input type="password" id="Password" name="' + options.field + '" title="Password" required="required" autocomplete="off" aria-labelledby="Password-form-label" data-bind="value: Password" aria-describedby="Password-form-hint"/>')
+            .appendTo(container)
+            .kendoTextBox();
+    }
+    function setUsernameEditor(container, options) {
+        $('<input type="text" id="txtUsername" name="' + options.field + '" title="User Name" required="required" autocomplete="off" aria-labelledby="Password-form-label" data-bind="value: Username" aria-describedby=" "/>')
+            .appendTo(container)
+            .kendoTextBox();
+    }
+    function setFirstNameEditor(container, options) {
+        $('<input type="text" id="txtFirstName" name="' + options.field + '" title="First Name" required="required" autocomplete="off" aria-labelledby="Password-form-label" data-bind="value: FirstName" aria-describedby=" "/>')
+            .appendTo(container)
+            .kendoTextBox();
+    }
+
+    function setLastNameEditor(container, options) {
+        $('<input type="text" id="txtLastName" name="' + options.field + '" title="Name" required="required" autocomplete="off" aria-labelledby="Password-form-label" data-bind="value: LastName" aria-describedby=" "/>')
             .appendTo(container)
             .kendoTextBox();
     }
@@ -58,7 +82,7 @@
 
     function onFormSubmit(e) {
         e.preventDefault();
-        $("#validation-success").html("<div class='k-messagebox k-messagebox-success'>Form data is valid!</div>");
+        $("#validation-success").html("<div class='k-messagebox k-messagebox-success'>Informations are correct</div>");
         $.ajax({
             url: 'https://localhost:44367/api/account/register',
             method: 'POST',

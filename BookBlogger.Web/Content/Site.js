@@ -1,5 +1,79 @@
 ﻿
 $(document).ready(function () {
+    $("#grid").kendoGrid({
+        height: 500,
+        toolbar: ["create"],
+
+        columns: [
+            { field: "ISBN" },
+            { field: "BookName" },
+            { field: "Price" },
+            { field: "Details" },
+            { field: "ImageUrl" },
+            { field: "DownloadUrl" },
+            { field: "AuthorName" },
+            { field: "Surname" },
+            {
+                field: "Image",
+                width: 150,
+                template: '<img src="' + "https://dictionary.cambridge.org/images/thumb/book_noun_001_01679.jpg?version=5.0.252" + '">'
+            },
+            { command: ["edit", "destroy"], width: 180 }
+
+        ],
+
+        dataSource: {
+            type: "aspnetmvc-ajax",
+            transport: {
+                idField: "ID",
+                read: {
+                    url: "/api/Books",
+                    type: "GET"
+
+                },
+                create: {
+                    url: "api/Books",
+                    type: "POST"
+                },
+                update: {
+                    url: "api/Books",
+                    type: "PUT"
+                },
+                destroy: {
+
+                    url: "api/Books",
+                    type: "delete"
+                }
+
+            },
+            schema: {
+                data: "Data",
+                model: {
+                    id: "ID",
+                    fields: {
+                        ID: { type: "number" },
+                        ISBN: { type: "string" },
+                        BookName: { type: "string" },
+                        Price: { type: "number" },
+                        Details: { type: "string" },
+                        ImageUrl: { type: "string" },
+                        DownloadUrl: { type: "string" },
+                        AuthorName: { type: "string" },
+                        Surname: { type: "string" }
+                    }
+                }
+            },
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            serverGrouping: true,
+            serverAggregates: true,
+        },
+        editable: "inline",
+        destroy: true,
+        pageable: true,
+        scrollable: true
+    })
 
 $("#btnGrid").click(function () {
     $("#Add").hide();
@@ -7,80 +81,7 @@ $("#btnGrid").click(function () {
     $("#grid").toggle();
 
 
-$("#grid").kendoGrid({
-    height: 500,
-    toolbar: ["create"],
 
-    columns: [
-        { field: "ISBN" },
-        { field: "BookName" },
-        { field: "Price" },
-        { field: "Details" },
-        { field: "ImageUrl" },
-        { field: "DownloadUrl" },
-        { field: "AuthorName" },
-        { field: "Surname" },
-        {
-            field: "Image",
-            width: 150,
-            template: '<img src="' + "https://dictionary.cambridge.org/images/thumb/book_noun_001_01679.jpg?version=5.0.252" + '">'
-        },
-        { command: ["edit", "destroy"], width: 180 }
-
-    ],
-
-    dataSource: {
-        type: "aspnetmvc-ajax",
-        transport: {
-            idField: "ID",
-            read: {
-                url: "/api/Books",
-                type: "GET"
-                
-            },
-            create: {
-                url: "api/Books",
-                type:"POST"
-            },
-            update: {
-                url: "api/Books",
-                type:"PUT"
-            },
-            destroy: {
-                
-                url: "api/Books",
-                type: "delete"
-            }
-
-        },
-        schema: {
-            data: "Data",
-            model: {
-                id: "ID",
-                fields: {
-                    ID: { type: "number" },
-                    ISBN: { type: "string" },
-                    BookName: { type: "string" },
-                    Price: { type: "number" },
-                    Details: { type: "string" },
-                    ImageUrl: { type: "string" },
-                    DownloadUrl: { type: "string" },
-                    AuthorName: { type: "string" },
-                    Surname: { type: "string" }
-                }
-            }
-        },
-        serverPaging: true,
-        serverSorting: true,
-        serverFiltering: true,
-        serverGrouping: true,
-        serverAggregates: true,
-    },
-    editable: "inline",
-    destroy: true,
-    pageable: true,
-    scrollable: true
-})
 });
 
 $("#btnAdd").click(function () {
@@ -191,4 +192,27 @@ $("#audit").kendoGrid({
     navigatable: true
 })
 });
+    //$('#btnLogout').click(function () {
+    //    //$.ajax({
+    //    //    url: 'https://localhost:44367/api/account/login',
+    //    //    method: 'POST',
+    //    //    data: {
+    //    //        username: $('#txtUsername').val(),
+    //    //        password: $('#Password').val(),
+    //    //    },
+    //    //    success: function (res) {
+    //    //        window.location.href = res.RedirectUrl;
+    //    //    },
+    //    //    error: function (jqXHR) {
+    //    //        //$('#divErrorText').text(jqXHR.responseText);
+    //    //        //$('#divError').show('fade');
+    //    //        //$("#validation-success").html("<div class='k-messagebox k-messagebox-success'>Wrong Password or Username</div>");
+    //    //    }
+    //    //});
+    //    <div>
+    //        <ul class="btn btn-info">
+    //            <li>@Html.ActionLink("Register", "Register", "BookBlogger", new {area = ""}, null)</li>
+    //        </ul>
+    //    </div>
+    //});
 });
