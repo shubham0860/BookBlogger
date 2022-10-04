@@ -1,23 +1,31 @@
-﻿
+﻿/*/*function (response) { return response.statuses.ImageUrl }*/
+/*$("#grid").data("kendoGrid")*/
+
 $(document).ready(function () {
+  
     $("#grid").kendoGrid({
         height: 500,
         toolbar: ["create"],
-
+        
         columns: [
             { field: "ISBN" },
             { field: "BookName" },
             { field: "Price" },
             { field: "Details" },
-            { field: "ImageUrl" },
+            {
+                field: "ImageUrl",
+                width: 150,
+                template: '<img src="' +  + '">'
+
+            },
             { field: "DownloadUrl" },
             { field: "AuthorName" },
             { field: "Surname" },
-            {
-                field: "Image",
-                width: 150,
-                template: '<img src="' + "https://dictionary.cambridge.org/images/thumb/book_noun_001_01679.jpg?version=5.0.252" + '">'
-            },
+            //{
+            //    field: "Image",
+            //    width: 150,
+            //    template: '<img src="' +  + '">'
+            //},
             { command: ["edit", "destroy"], width: 180 }
 
         ],
@@ -74,7 +82,7 @@ $(document).ready(function () {
         pageable: true,
         scrollable: true
     })
-
+    //var data
 $("#btnGrid").click(function () {
     $("#Add").hide();
     $('#audit').hide();
@@ -192,27 +200,4 @@ $("#audit").kendoGrid({
     navigatable: true
 })
 });
-    //$('#btnLogout').click(function () {
-    //    //$.ajax({
-    //    //    url: 'https://localhost:44367/api/account/login',
-    //    //    method: 'POST',
-    //    //    data: {
-    //    //        username: $('#txtUsername').val(),
-    //    //        password: $('#Password').val(),
-    //    //    },
-    //    //    success: function (res) {
-    //    //        window.location.href = res.RedirectUrl;
-    //    //    },
-    //    //    error: function (jqXHR) {
-    //    //        //$('#divErrorText').text(jqXHR.responseText);
-    //    //        //$('#divError').show('fade');
-    //    //        //$("#validation-success").html("<div class='k-messagebox k-messagebox-success'>Wrong Password or Username</div>");
-    //    //    }
-    //    //});
-    //    <div>
-    //        <ul class="btn btn-info">
-    //            <li>@Html.ActionLink("Register", "Register", "BookBlogger", new {area = ""}, null)</li>
-    //        </ul>
-    //    </div>
-    //});
 });
