@@ -10,6 +10,7 @@ using System.Web.Http.ModelBinding;
 using BookBlogger.Web.Models;
 using System;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 
 namespace BookBlogger.Web.Controllers
 {
@@ -22,6 +23,8 @@ namespace BookBlogger.Web.Controllers
             ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
 
             var book = db.ReadBooks(responseMessage).ToList();
+
+            Debug.WriteLine(responseMessage.Value);
             
             return book.ToDataSourceResult(request);
         }
@@ -41,15 +44,18 @@ namespace BookBlogger.Web.Controllers
         [HttpGet]
         public DataSourceResult GetAudits([ModelBinder(typeof(WebApiDataSourceRequestModelBinder))] DataSourceRequest request)
         {
-            return db.Audits.ToDataSourceResult(request);
+            ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
+            var AuditData = db.ReadAudit(responseMessage).ToList();
+
+            return AuditData.ToDataSourceResult(request);
         }
 
         public HttpResponseMessage PostBook(Books books)
         {
             if (ModelState.IsValid)
             {
-              if(books.ISBN != null && books.BookName != null && books.Price != null && books.Details != null && books.AuthorName != null && books.Surname != null)
-                {
+              //if(books.ISBN != null && books.BookName != null && books.Price != null && books.Details != null && books.AuthorName != null && books.Surname != null)
+              //  {
                     ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
 
                     db.AddBook(AccountController.UserId, books.ISBN, books.BookName, books.Price, books.Details, books.ImageUrl, books.DownloadUrl, books.AuthorName, books.Surname, responseMessage);
@@ -67,9 +73,9 @@ namespace BookBlogger.Web.Controllers
                     response.Headers.Location = new Uri(Url.Link("DefaultApi", new { controller = "Books", id = Id }));
 
                     return response;
-                }
+                //}
 
-                return Request.CreateResponse(HttpStatusCode.NoContent);
+                //return Request.CreateResponse(HttpStatusCode.NoContent);
             }
             else
             {
@@ -85,8 +91,8 @@ namespace BookBlogger.Web.Controllers
             }
 
 
-            if (books.ISBN != null && books.BookName != null && books.Price != null && books.Details != null && books.AuthorName != null && books.Surname != null)
-            {
+            //if (books.ISBN != null && books.BookName != null && books.Price != null && books.Details != null && books.AuthorName != null && books.Surname != null)
+            //{
                 try
                 {
                     ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
@@ -100,9 +106,9 @@ namespace BookBlogger.Web.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-                return Request.CreateResponse(HttpStatusCode.NoContent);
+        //        return Request.CreateResponse(HttpStatusCode.NoContent);
 
-        }
+        //}
 
         public HttpResponseMessage DeleteBook(Books books)
         {

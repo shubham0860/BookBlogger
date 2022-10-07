@@ -188,6 +188,9 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
           <Parameter Name="Surname" Type="varchar" Mode="In" />
           <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
         </Function>
+        <Function Name="ReadAudit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
+        </Function>
         <Function Name="ReadBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="responseMessage" Type="nvarchar" Mode="InOut" />
@@ -337,6 +340,9 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
           </FunctionImport>
           <FunctionImport Name="ReadBook" ReturnType="Collection(BookBloggerModel.ReadBook_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="responseMessage" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ReadAudit" ReturnType="Collection(BookBloggerModel.ReadAudit_Result)" >
             <Parameter Name="responseMessage" Mode="InOut" Type="String" />
           </FunctionImport>
           <!--<FunctionImport Name="ReadBooks" ReturnType="Collection(BookBloggerModel.ReadBooks_Result)">
@@ -502,6 +508,14 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
           <Property Type="String" Name="Surname" Nullable="true" MaxLength="40" />
           <Property Type="DateTime" Name="CreatedDateTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="ReadAudit_Result">
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="BookName" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="Operation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="NewValue" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OldValue" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedDateTime" Nullable="true" Precision="23" />
         </ComplexType>
         <!--<ComplexType Name="ReadBooks_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -684,6 +698,18 @@ warning 6002: The table/view 'BookBlogger.dbo.BookView' does not have a primary 
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReadAudit" FunctionName="BookBloggerModel.Store.ReadAudit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BookBloggerModel.ReadAudit_Result">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

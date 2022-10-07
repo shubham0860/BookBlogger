@@ -17,5 +17,9 @@ namespace BookBlogger.Web.Controllers
         {
             return View();
         }
+        public ActionResult Logout()
+        {
+            return View();
+        }
     }
 }

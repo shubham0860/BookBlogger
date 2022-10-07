@@ -197,5 +197,10 @@ namespace BookBlogger.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReadBook_Result>("ReadBook", userIDParameter, responseMessage);
         }
+    
+        public virtual ObjectResult<ReadAudit_Result> ReadAudit(ObjectParameter responseMessage)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReadAudit_Result>("ReadAudit", responseMessage);
+        }
     }
 }

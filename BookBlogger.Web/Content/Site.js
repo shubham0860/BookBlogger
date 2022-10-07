@@ -1,96 +1,88 @@
-﻿/*/*function (response) { return response.statuses.ImageUrl }*/
-/*$("#grid").data("kendoGrid")*/
+﻿$(document).ready(function () {
 
-$(document).ready(function () {
-  
-    $("#grid").kendoGrid({
-        height: 500,
-        toolbar: ["create"],
-        
-        columns: [
-            { field: "ISBN" },
-            { field: "BookName" },
-            { field: "Price" },
-            { field: "Details" },
-            {
-                field: "ImageUrl",
-                width: 150,
-                template: '<img src="' +  + '">'
+    dataSource = new kendo.data.DataSource({
+        type: "aspnetmvc-ajax",
+        transport: {
+            idField: "ID",
+            read: {
+                url: "/api/Books",
+                type: "GET"
 
             },
-            { field: "DownloadUrl" },
-            { field: "AuthorName" },
-            { field: "Surname" },
-            //{
-            //    field: "Image",
-            //    width: 150,
-            //    template: '<img src="' +  + '">'
-            //},
-            { command: ["edit", "destroy"], width: 180 }
-
-        ],
-
-        dataSource: {
-            type: "aspnetmvc-ajax",
-            transport: {
-                idField: "ID",
-                read: {
-                    url: "/api/Books",
-                    type: "GET"
-
-                },
-                create: {
-                    url: "api/Books",
-                    type: "POST"
-                },
-                update: {
-                    url: "api/Books",
-                    type: "PUT"
-                },
-                destroy: {
-
-                    url: "api/Books",
-                    type: "delete"
-                }
-
+            create: {
+                url: "/api/Books",
+                type: "POST"
             },
-            schema: {
-                data: "Data",
-                model: {
-                    id: "ID",
-                    fields: {
-                        ID: { type: "number" },
-                        ISBN: { type: "string" },
-                        BookName: { type: "string" },
-                        Price: { type: "number" },
-                        Details: { type: "string" },
-                        ImageUrl: { type: "string" },
-                        DownloadUrl: { type: "string" },
-                        AuthorName: { type: "string" },
-                        Surname: { type: "string" }
-                    }
-                }
+            update: {
+                url: "/api/Books",
+                type: "PUT"
             },
-            serverPaging: true,
-            serverSorting: true,
-            serverFiltering: true,
-            serverGrouping: true,
-            serverAggregates: true,
+            destroy: {
+
+                url: "/api/Books",
+                type: "delete"
+            }
+
         },
-        editable: "inline",
+        schema: {
+            data: "Data",
+            model: {
+                id: "ID",
+                fields: {
+                    ID: { type: "number" },
+                    ISBN: { type: "string", validation: { required: true } },
+                    BookName: { type: "string", validation: { required: true } },
+                    Price: { type: "number", validation: { required: true } },
+                    Details: { type: "string", validation: { required: true } },
+                    ImageUrl: { type: "string" },
+                    DownloadUrl: { type: "string" },
+                    AuthorName: { type: "string", validation: { required: true } },
+                    Surname: { type: "string", validation: { required: true } }
+                }
+            }
+        },
+        serverPaging: true,
+        serverSorting: true,
+        serverFiltering: true,
+        serverGrouping: true,
+        serverAggregates: true,
+    });
+
+    $("#btnGrid").click(function () {
+        $("#Add").hide();
+        $('#audit').hide();
+        $("#grid").toggle();
+    });
+
+    var column = [
+        { field: "ISBN" },
+        { field: "BookName" },
+        { field: "Price" },
+        { field: "Details" },
+        { field: "ImageUrl" },
+        { field: "DownloadUrl" },
+        { field: "AuthorName" },
+        { field: "Surname" },
+        {
+            command: ["edit", "destroy"], width: 180
+        }
+    ];
+
+ $("#grid").kendoGrid({
+       height: 530,
+       width: "100%",
+       toolbar: ["create", "search"],
+       columns: column,
+       dataSource: dataSource,
+       editable: "popup",
+       selectable: "single row",
+       resizable: true,
         destroy: true,
         pageable: true,
         scrollable: true
-    })
-    //var data
-$("#btnGrid").click(function () {
-    $("#Add").hide();
-    $('#audit').hide();
-    $("#grid").toggle();
+   }).data("kendoGrid");
 
 
-
-});
 
 $("#btnAdd").click(function () {
     $("#grid").hide();
@@ -98,7 +90,7 @@ $("#btnAdd").click(function () {
     $("#Add").toggle();
 
 $("#Add").kendoGrid({
-    height: 500,
+    height: 530,
     columns: [
         { field: "ISBN" },
         { field: "BookName" },
@@ -112,7 +104,6 @@ $("#Add").kendoGrid({
 
     dataSource: {
         type: "aspnetmvc-ajax",
-        autoSync: true,
         transport: {
             idField: "ID",
             
@@ -145,8 +136,6 @@ $("#Add").kendoGrid({
         serverGrouping: true,
         serverAggregates: true,
     },
-    editable: "inline",
-    destroy: true,
     pageable: true,
     scrollable: true
 })
@@ -157,10 +146,11 @@ $("#btnAudit").click(function () {
     $("#audit").toggle();
 
 $("#audit").kendoGrid({
-    height: 400,
+    height: 530,
+    toolbar: ["search"],
     columns: [
-        { field: "UserID" },
-        { field: "BookID" },
+        { field: "Username" },
+        { field: "BookName" },
         { field: "Operation" },
         { field: "NewValue" },
         { field: "OldValue" },
@@ -181,8 +171,8 @@ $("#audit").kendoGrid({
                 id: "ID",
                 fields: {
                     ID: { type: "number" },
-                    UserID: { type: "number" },
-                    BookID: { type: "number" },
+                    Username: { type: "string" },
+                    BookName: { type: "string" },
                     Operation: { type: "string" },
                     NewValue: { type: "string" },
                     OldValue: { type: "string" },

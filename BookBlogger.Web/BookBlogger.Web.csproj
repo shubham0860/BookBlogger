@@ -315,12 +315,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Books.cs" />
+    <Compile Include="Models\ForId.cs" />
     <Compile Include="Models\userLogin.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Books.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -4022,6 +4024,7 @@
     <Content Include="Views\BookBlogger\Register.cshtml" />
     <Content Include="Views\BookBlogger\Login.cshtml" />
     <Content Include="Views\BookBlogger\_myLayout.cshtml" />
+    <Content Include="Views\BookBlogger\Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
