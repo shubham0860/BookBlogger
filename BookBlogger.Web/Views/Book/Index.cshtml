@@ -17,6 +17,7 @@
                 <li><input id="btnAdd" class="btn-link btn-new d-flex" type="button" value="My Books" /></li>
                 <li><input id="btnAudit" class="btn-link btn-new d-flex" type="button" value="Audit Data" /></li>
                 <li class="btn-link btn-logout d-flex">@Html.ActionLink("Logout", "Logout", "BookBlogger", new { area = "" }, null)</li>
+                @*<li class="caption" id="getUser"></li>*@
             </ul>
         </div>
     </div>
@@ -36,7 +37,7 @@
 
     #grid {
         margin-top: 23px;
-        place-content:center;
+        place-content: center;
     }
 
     #Add {
@@ -54,15 +55,19 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
     .k-grid-header .center-header {
         text-align: center;
     }
+
     .k-grid tbody .k-grid .k-grid-header .k-header {
         background-color: lightblue;
     }
+
     .k-grid tbody .k-grid tbody .k-grid .k-grid-header .k-header {
         background-color: yellowgreen;
     }
+
     .k-grid tbody .k-grid tbody .k-grid tbody .k-grid .k-grid-header .k-header {
         background-color: orange;
     }

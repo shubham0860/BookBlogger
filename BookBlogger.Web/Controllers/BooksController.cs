@@ -11,23 +11,43 @@ using BookBlogger.Web.Models;
 using System;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
+using NLog;
 
 namespace BookBlogger.Web.Controllers
 {
     public class BooksController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public BooksBloggerEntities db = new BooksBloggerEntities();
 
         public DataSourceResult GetBooks([ModelBinder(typeof(WebApiDataSourceRequestModelBinder))]DataSourceRequest request)
         {
             ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
-
-            var book = db.ReadBooks(responseMessage).ToList();
-
-            Debug.WriteLine(responseMessage.Value);
             
-            return book.ToDataSourceResult(request);
+           // try
+            //{
+                var book = db.ReadBooks(responseMessage).ToList();
+                return book.ToDataSourceResult(request);
+            //}
+            //catch(Exception e)
+            //{
+                //logger.Error(e);
+               // logger.Error(responseMessage.Value);
+                //return book.ToDataSourceResult(request);
+           // }
+
+            //return book.ToDataSourceResult(request);
+
+            //Debug.WriteLine(responseMessage.Value);
+
         }
+
+        //[Route("api/books/GetUsername")]
+        //[HttpGet]
+        //public string GetUsername()
+        //{
+        //    return db.Users.Find(AccountController.UserId).Username;
+        //}
 
         [Route("api/books/UserBooks")]
         [HttpGet]
@@ -54,8 +74,10 @@ namespace BookBlogger.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-              //if(books.ISBN != null && books.BookName != null && books.Price != null && books.Details != null && books.AuthorName != null && books.Surname != null)
-              //  {
+                //if(books.ISBN != null && books.BookName != null && books.Price != null && books.Details != null && books.AuthorName != null && books.Surname != null)
+                //  {
+                try
+                {
                     ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
 
                     db.AddBook(AccountController.UserId, books.ISBN, books.BookName, books.Price, books.Details, books.ImageUrl, books.DownloadUrl, books.AuthorName, books.Surname, responseMessage);
@@ -73,12 +95,21 @@ namespace BookBlogger.Web.Controllers
                     response.Headers.Location = new Uri(Url.Link("DefaultApi", new { controller = "Books", id = Id }));
 
                     return response;
+                }
+                catch(Exception e)
+                {
+                    logger.Error("Exception Occurred during Adding the book");
+                    logger.Error(e);
+                    return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed,e);
+                }
+
                 //}
 
                 //return Request.CreateResponse(HttpStatusCode.NoContent);
             }
             else
             {
+                logger.Error("Invalid ModelState");
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest,ModelState);
             }
         }
@@ -87,6 +118,7 @@ namespace BookBlogger.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                logger.Error("Invalid ModelState");
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
@@ -101,6 +133,8 @@ namespace BookBlogger.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
+                    logger.Error("Exception Occurred during Updating the book");
+                    logger.Error(ex);
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
                 }
 
@@ -129,11 +163,14 @@ namespace BookBlogger.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
+                    logger.Error("Exception during deleting the book");
+                    logger.Error(ex);
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
                 }
-
+                logger.Info("Book Deleted");
                 return Request.CreateResponse(HttpStatusCode.OK, book);
             }
+            logger.Info("Not An Admin");
             return Request.CreateResponse(HttpStatusCode.Unauthorized, book);
         }
 

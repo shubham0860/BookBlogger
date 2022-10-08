@@ -1,4 +1,4 @@
-﻿
+﻿@*@model BookBlogger.Data.User*@ 
 @{
     ViewBag.Title = "Login";
 }
@@ -7,7 +7,7 @@
     <div id="validation-success"></div>
     @(Html.Kendo().Form<BookBlogger.Web.Models.UserLogin>()
         .Name("login")
-        .HtmlAttributes(new { controller = "Account", action = "register", method = "POST" })
+        //.HtmlAttributes(new { controller = "Account", action = "register", method = "POST" })
 
         .Validatable(v =>
         {

@@ -1,5 +1,6 @@
 ﻿using BookBlogger.Data;
 using BookBlogger.Web.Models;
+using NLog;
 using System;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace BookBlogger.Web.Controllers
 
     public class AccountController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private BooksBloggerEntities  entities = new BooksBloggerEntities();
         private object varhashedBytes;
         public static int UserId;
@@ -36,14 +38,25 @@ namespace BookBlogger.Web.Controllers
             {
                 using (entities)
                 {
-                    model.IsAdmin = false;
-                    ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
+                    try
+                    {
+                        model.IsAdmin = false;
+                        ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
+                        
+                        entities.AddUser(model.Username, model.Password, model.FirstName, model.LastName, model.IsAdmin, responseMessage);
+                        entities.SaveChanges();
+                    }
+                    catch(Exception e)
+                    {
+                        logger.Error("Error Occoured During Adding User Data In Database");
+                        logger.Error(e);
 
-                    entities.AddUser(model.Username, model.Password, model.FirstName, model.LastName, model.IsAdmin, responseMessage);
-                    entities.SaveChanges();   
+                    }
+
                 }
             }
-           
+            logger.Error("ModelState is Invalid");
+
         }
 
         [Route("api/account/login")]
@@ -58,30 +71,49 @@ namespace BookBlogger.Web.Controllers
               
                     using (var sha512 = SHA512.Create())
                     {
-                        // Send a sample text to hash.  
-                        varhashedBytes = sha512.ComputeHash(Encoding.UTF8.GetBytes(userLogin.Password));
-                        // Get the hashed string.  
-                        var PassHash = BitConverter.ToString((byte[])varhashedBytes).Replace("-", "").ToLower();
-
-                        var _currentUser = entities.Users.FirstOrDefault(user => user.Username == userLogin.Username && user.PasswordHash == varhashedBytes);
-                        if (_currentUser != null)
+                        // Send a sample text to hash.
+                        try
                         {
-                            UserId = _currentUser.ID;
-                            //TODO: Redirect To Single app Page with this UserId 
-                            var newUrl = this.Url.Link("Default", new
-                            {
-                                Controller = "Book",
-                                Action = "Index"
-                            });
-                            return Request.CreateResponse(HttpStatusCode.Created,
-                                                     new { Success = true, RedirectUrl = newUrl });
+                            varhashedBytes = sha512.ComputeHash(Encoding.UTF8.GetBytes(userLogin.Password));
                         }
+                        catch(Exception e)
+                        {
+                            logger.Error("Error During hashing the Password During login");
+                            logger.Error(e);
+
+                        }
+
+                        // Get the hashed string.  
+                        //var PassHash = BitConverter.ToString((byte[])varhashedBytes).Replace("-", "").ToLower();
+                        try
+                        {
+                            var _currentUser = entities.Users.FirstOrDefault(user => user.Username == userLogin.Username && user.PasswordHash == varhashedBytes);
+                            if (_currentUser != null)
+                            {
+                                UserId = _currentUser.ID;
+                                //TODO: Redirect To Single app Page with this UserId 
+                                var newUrl = this.Url.Link("Default", new
+                                {
+                                    Controller = "Book",
+                                    Action = "Index"
+                                });
+                                return Request.CreateResponse(HttpStatusCode.Created,
+                                                         new { Success = true, RedirectUrl = newUrl });
+                            }
+                        }
+                        catch(Exception e)
+                        {
+                            logger.Error("Error Occoured During User Validation");
+                            logger.Error(e);
+
+                        }
+
 
                     }
 
                 }
             }
-            
+            logger.Error("Invalid User");
             var testUrl = this.Url.Link("Default", new
             {
                 Controller = "Book",

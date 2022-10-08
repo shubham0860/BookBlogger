@@ -1,5 +1,19 @@
 ﻿$(document).ready(function () {
 
+   // $("#getUser").load(
+    //    function getUser() {
+    //    $.ajax({
+    //        url: 'https://localhost:44367/api/books/GetUsername',
+    //        method: 'GET',
+    //        success: function (res) {
+    //            return res;
+    //        },
+    //        error: function () {
+    //        }
+    //    });
+    //}
+    //});
+
     dataSource = new kendo.data.DataSource({
         type: "aspnetmvc-ajax",
         transport: {

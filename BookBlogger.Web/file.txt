@@ -1,0 +1,1 @@
+2022-10-07 22:19:41.8275|ERROR|BookBlogger.Web.Controllers.AccountController|Error Occoured During Adding User Data In Database
