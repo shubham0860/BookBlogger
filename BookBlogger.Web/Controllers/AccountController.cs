@@ -18,7 +18,7 @@ namespace BookBlogger.Web.Controllers
     public class AccountController : ApiController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private BooksBloggerEntities  entities = new BooksBloggerEntities();
+        private BooksBloggerEntities entities = new BooksBloggerEntities();
         private object varhashedBytes;
         public static int UserId;
         public AccountController()
@@ -27,13 +27,11 @@ namespace BookBlogger.Web.Controllers
         }
 
         [Route("api/account/register")]
-        
+
         [HttpPost]
-        
+
         public void Register(Users model)
         {
-            //model.IsAdmin = true;
-
             if (ModelState.IsValid)
             {
                 using (entities)
@@ -42,11 +40,12 @@ namespace BookBlogger.Web.Controllers
                     {
                         model.IsAdmin = false;
                         ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
-                        
+
                         entities.AddUser(model.Username, model.Password, model.FirstName, model.LastName, model.IsAdmin, responseMessage);
                         entities.SaveChanges();
+                        logger.Info("User Registered Successfully");
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         logger.Error("Error Occoured During Adding User Data In Database");
                         logger.Error(e);
@@ -61,47 +60,43 @@ namespace BookBlogger.Web.Controllers
 
         [Route("api/account/login")]
         [HttpPost]
-        
+
         public HttpResponseMessage Login(Users userLogin)
         {
             if (ModelState.IsValid)
             {
                 using (entities)
                 {
-              
+
                     using (var sha512 = SHA512.Create())
                     {
-                        // Send a sample text to hash.
                         try
                         {
                             varhashedBytes = sha512.ComputeHash(Encoding.UTF8.GetBytes(userLogin.Password));
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             logger.Error("Error During hashing the Password During login");
                             logger.Error(e);
 
                         }
-
-                        // Get the hashed string.  
-                        //var PassHash = BitConverter.ToString((byte[])varhashedBytes).Replace("-", "").ToLower();
                         try
                         {
                             var _currentUser = entities.Users.FirstOrDefault(user => user.Username == userLogin.Username && user.PasswordHash == varhashedBytes);
                             if (_currentUser != null)
                             {
                                 UserId = _currentUser.ID;
-                                //TODO: Redirect To Single app Page with this UserId 
                                 var newUrl = this.Url.Link("Default", new
                                 {
                                     Controller = "Book",
                                     Action = "Index"
                                 });
+                                logger.Info("User Logged in Successfully");
                                 return Request.CreateResponse(HttpStatusCode.Created,
                                                          new { Success = true, RedirectUrl = newUrl });
                             }
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             logger.Error("Error Occoured During User Validation");
                             logger.Error(e);
@@ -117,10 +112,25 @@ namespace BookBlogger.Web.Controllers
             var testUrl = this.Url.Link("Default", new
             {
                 Controller = "Book",
-                Action = "Error"
+                Action = "Index"
             });
             return Request.CreateResponse(HttpStatusCode.Forbidden,
                                      new { Success = false, RedirectUrl = testUrl });
+        }
+
+        [Route("api/account/Logout")]
+        [HttpGet]
+        public HttpResponseMessage Logout()
+        {
+            UserId = 0;
+            var loginUrl = this.Url.Link("Default", new
+            {
+                Controller = "BookBlogger",
+                Action = "Logout"
+            });
+            logger.Info("User Logged Out Successfully");
+            return Request.CreateResponse(HttpStatusCode.Created,
+                                     new { Success = true, RedirectUrl = loginUrl });
         }
     }
 }

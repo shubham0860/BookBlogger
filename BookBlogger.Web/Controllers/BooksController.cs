@@ -20,34 +20,23 @@ namespace BookBlogger.Web.Controllers
         private static Logger logger = LogManager.GetCurrentClassLogger();
         public BooksBloggerEntities db = new BooksBloggerEntities();
 
+        
         public DataSourceResult GetBooks([ModelBinder(typeof(WebApiDataSourceRequestModelBinder))]DataSourceRequest request)
         {
             ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
             
-           // try
-            //{
-                var book = db.ReadBooks(responseMessage).ToList();
-                return book.ToDataSourceResult(request);
-            //}
-            //catch(Exception e)
-            //{
-                //logger.Error(e);
-               // logger.Error(responseMessage.Value);
-                //return book.ToDataSourceResult(request);
-           // }
+            var book = db.ReadBooks(responseMessage).ToList();
 
-            //return book.ToDataSourceResult(request);
-
-            //Debug.WriteLine(responseMessage.Value);
-
+            logger.Info("Books Fetched Successfully");
+            return book.ToDataSourceResult(request);
         }
 
-        //[Route("api/books/GetUsername")]
-        //[HttpGet]
-        //public string GetUsername()
-        //{
-        //    return db.Users.Find(AccountController.UserId).Username;
-        //}
+        [Route("api/books/GetUsername")]
+        [HttpGet]
+        public string GetUsername()
+        {
+            return db.Users.Find(AccountController.UserId).Username;
+        }
 
         [Route("api/books/UserBooks")]
         [HttpGet]
@@ -57,6 +46,7 @@ namespace BookBlogger.Web.Controllers
 
             var book = db.ReadBook(AccountController.UserId, responseMessage).ToList();
 
+            logger.Info("Books Fetched Successfully");
             return book.ToDataSourceResult(request);
         }
 
@@ -74,8 +64,6 @@ namespace BookBlogger.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                //if(books.ISBN != null && books.BookName != null && books.Price != null && books.Details != null && books.AuthorName != null && books.Surname != null)
-                //  {
                 try
                 {
                     ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
@@ -91,9 +79,10 @@ namespace BookBlogger.Web.Controllers
 
 
                     var Id = (from record in db.Books orderby record.ID descending select record.ID).First();
-                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, result);
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
                     response.Headers.Location = new Uri(Url.Link("DefaultApi", new { controller = "Books", id = Id }));
 
+                    logger.Info("Book Added Successfully");
                     return response;
                 }
                 catch(Exception e)
@@ -103,15 +92,13 @@ namespace BookBlogger.Web.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed,e);
                 }
 
-                //}
-
-                //return Request.CreateResponse(HttpStatusCode.NoContent);
             }
             else
             {
                 logger.Error("Invalid ModelState");
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest,ModelState);
             }
+
         }
 
         public HttpResponseMessage PutBook(Books books)
@@ -122,9 +109,6 @@ namespace BookBlogger.Web.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-
-            //if (books.ISBN != null && books.BookName != null && books.Price != null && books.Details != null && books.AuthorName != null && books.Surname != null)
-            //{
                 try
                 {
                     ObjectParameter responseMessage = new ObjectParameter("responseMessage", typeof(string));
@@ -138,15 +122,13 @@ namespace BookBlogger.Web.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
                 }
 
+                logger.Info("Book Updated Successfully");
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-        //        return Request.CreateResponse(HttpStatusCode.NoContent);
 
-        //}
 
         public HttpResponseMessage DeleteBook(Books books)
         {
-            //var response = new HttpResponseMessage();
             var user = AccountController.UserId;
             var isAdmin = db.Users.Find(user).IsAdmin;
             Book book = db.Books.Find(books.ID);

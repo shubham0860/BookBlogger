@@ -1,18 +1,29 @@
 ﻿$(document).ready(function () {
+    
+    $.ajax({
+        url: 'https://localhost:44367/api/books/GetUsername',
+        method: 'GET',
+        success: function (res) {
+            //return res;
+            $("#getUser").html(res);
+        },
+        error: function () {
+        },
+    });
 
-   // $("#getUser").load(
-    //    function getUser() {
-    //    $.ajax({
-    //        url: 'https://localhost:44367/api/books/GetUsername',
-    //        method: 'GET',
-    //        success: function (res) {
-    //            return res;
-    //        },
-    //        error: function () {
-    //        }
-    //    });
-    //}
-    //});
+    $("#btnLogout").click(function (){
+        $.ajax({
+            url: 'https://localhost:44367/api/account/Logout',
+            method: 'GET',
+
+            success: function (res) {
+                //return res;
+                window.location.href = res.RedirectUrl;
+            },
+            error: function () {
+            },
+        });
+    });
 
     dataSource = new kendo.data.DataSource({
         type: "aspnetmvc-ajax",

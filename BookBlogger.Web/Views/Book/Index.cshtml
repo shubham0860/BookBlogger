@@ -1,5 +1,4 @@
-﻿
-<div class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light">
+﻿<div class="navbar navbar-inverse navbar-fixed-top navbar-light bg-light">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -16,8 +15,8 @@
                 <li><input id="btnGrid" class="btn-link btn-new d-flex" type="button" value="All Books" /></li>
                 <li><input id="btnAdd" class="btn-link btn-new d-flex" type="button" value="My Books" /></li>
                 <li><input id="btnAudit" class="btn-link btn-new d-flex" type="button" value="Audit Data" /></li>
-                <li class="btn-link btn-logout d-flex">@Html.ActionLink("Logout", "Logout", "BookBlogger", new { area = "" }, null)</li>
-                @*<li class="caption" id="getUser"></li>*@
+                <li id="btnLogout" class="btn-link btn-logout d-flex">Logout</li>
+                <li class="caption btn-new user" id="getUser"></li>
             </ul>
         </div>
     </div>
@@ -26,13 +25,22 @@
 <div id="Add"></div>
 <div id="audit"></div>
 
+
 <style>
+    .user{
+        color:blanchedalmond;
+        float:right;
+        left:430px;
+        padding:8px;
+    }
     .btn-new {
         padding: 22px;
     }
 
     .btn-logout {
         padding: 8px;
+        left:630px;
+        top:13px;
     }
 
     #grid {

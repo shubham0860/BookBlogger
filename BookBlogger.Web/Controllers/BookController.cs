@@ -11,5 +11,6 @@ namespace BookBlogger.Web.Controllers
             //var Username = db.Users.Find(AccountController.UserId).Username;
             return View();
         }
+
     }
 }
