@@ -137,6 +137,9 @@
       <DependentUpon>BookBlogger.edmx</DependentUpon>
       <LastGenOutput>BookBlogger.cs</LastGenOutput>
     </Content>
+    <Content Include="Database\BookBlogger_Stored_Procedures.sql" />
+    <Content Include="Database\BookBlogger_Tables.sql" />
+    <Content Include="Database\BookBlogger_view.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
