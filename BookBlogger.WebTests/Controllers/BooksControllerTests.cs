@@ -75,12 +75,12 @@ namespace BookBlogger.Web.Controllers.Tests
             Books book = new Books();
 
             //book.ID = 1;
-            book.BookName = "Harry Potter";
-            book.AuthorName = "JK";
+            book.BookName = "Three Mistakes Of My Life";
+            book.AuthorName = "Chetan";
             book.Details = "Fiction";
-            book.ISBN = "JHOPW96QNP";
-            book.Price = 890;
-            book.Surname = "Rolling";
+            book.ISBN = "JHOPW123FNP";
+            book.Price = 350;
+            book.Surname = "Bhagat";
 
 
             //Act
@@ -110,7 +110,7 @@ namespace BookBlogger.Web.Controllers.Tests
             book.AuthorName = "Jhon";
             book.Details = "Autobiography";
             book.ISBN = "JH09876QNP";
-            book.Price = 400;
+            book.Price = 500;
             book.Surname = "Roman";
 
             //Act
@@ -135,7 +135,7 @@ namespace BookBlogger.Web.Controllers.Tests
 
             AccountController.UserId = 8;
             Books book = new Books();
-            book.ID = 23;
+            book.ID = 24;
 
             //Act
             var Delete_Book_result = controller.DeleteBook(book);
