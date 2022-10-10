@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookBlogger.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace BookBlogger.Web.Controllers
 {
     public class BookBloggerController : Controller
     {
+        
         // GET: BookBlogger
         public ActionResult Register()
         {

@@ -1,11 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BookBlogger.Web.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookBlogger.Data;
 using Kendo.Mvc.UI;
 using BookBlogger.Web.Models;
 using System.Web.Http;
@@ -78,16 +71,16 @@ namespace BookBlogger.Web.Controllers.Tests
             };
             controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
 
-            AccountController.UserId = 2;
+            AccountController.UserId = 8;
             Books book = new Books();
 
             //book.ID = 1;
-            book.BookName = "Life In a Metro";
-            book.AuthorName = "Smith";
+            book.BookName = "Harry Potter";
+            book.AuthorName = "JK";
             book.Details = "Fiction";
             book.ISBN = "JHOPW96QNP";
             book.Price = 890;
-            book.Surname = "Taylor";
+            book.Surname = "Rolling";
 
 
             //Act
@@ -110,7 +103,7 @@ namespace BookBlogger.Web.Controllers.Tests
             };
             controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
 
-            AccountController.UserId = 2;
+            AccountController.UserId = 8;
             Books book = new Books();
             book.ID = 1;
             book.BookName = "Jhon is My Name";
@@ -142,7 +135,7 @@ namespace BookBlogger.Web.Controllers.Tests
 
             AccountController.UserId = 8;
             Books book = new Books();
-            book.ID = 20;
+            book.ID = 23;
 
             //Act
             var Delete_Book_result = controller.DeleteBook(book);

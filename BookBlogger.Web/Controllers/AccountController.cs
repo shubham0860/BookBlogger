@@ -86,6 +86,7 @@ namespace BookBlogger.Web.Controllers
                             if (_currentUser != null)
                             {
                                 UserId = _currentUser.ID;
+
                                 var newUrl = this.Url.Link("Default", new
                                 {
                                     Controller = "Book",

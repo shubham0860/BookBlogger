@@ -8,57 +8,6 @@
 <h5>Click here to login Again</h5>
 
 @*<button type="button" id="login" class="k-button">Login</button>*@
-<ul><li class="btn btn-info btnlogin">@Html.ActionLink("Login", "Login", "BookBlogger", new { area = "" }, null)</li></ul>
-<style>
-    .button {
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-    }
-    .btnlogin {
-        margin: 0;
-        padding: 4px 8px;
-        box-sizing: border-box;
-        border-width: 1px;
-        border-style: solid;
-        background-repeat: repeat-x;
-        background-position: 0 center;
-        font: inherit;
-        line-height: 1.42857143;
-        text-align: center;
-        text-decoration: none;
-        display: inline-flex;
-        overflow: hidden;
-        align-items: center;
-        gap: 4px;
-        justify-content: center;
-        vertical-align: middle;
-        user-select: none;
-        cursor: pointer;
-        outline: 0;
-        -webkit-appearance: none;
-        position: relative;
+<ul><li class="btn btn-info btnStyle">@Html.ActionLink("Login", "Login", "BookBlogger", new { area = "" }, null)</li></ul>
+<link href="~/Content/myStyles.css" rel="stylesheet" />
 
-    }
-</style>
-@*<script>
-    $.ajax({
-        url: 'https://localhost:44367/api/account/Logout/0',
-        method: 'GET',
-        //data: {
-        //    id: 0,
-        //},
-        success: function (res) {
-            //return res;
-
-        },
-        error: function () {
-        },
-    });
-</script>*@

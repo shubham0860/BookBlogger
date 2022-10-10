@@ -78,7 +78,6 @@
         $('#audit').hide();
         $("#grid").toggle();
     });
-
     var column = [
         { field: "ISBN" },
         { field: "BookName" },
@@ -95,15 +94,13 @@
 
  $("#grid").kendoGrid({
        height: 530,
-       width: "100%",
-       toolbar: ["create", "search"],
+     toolbar: ["create", "search"],
        columns: column,
        dataSource: dataSource,
        editable: "popup",
        selectable: "single row",
-       resizable: true,
+     resizable: true,
         destroy: true,
-        pageable: true,
         scrollable: true
    }).data("kendoGrid");
 
@@ -161,7 +158,6 @@ $("#Add").kendoGrid({
         serverGrouping: true,
         serverAggregates: true,
     },
-    pageable: true,
     scrollable: true
 })
 });
@@ -211,8 +207,7 @@ $("#audit").kendoGrid({
         serverGrouping: true,
         serverAggregates: true,
     },
-    pageable: true,
-    navigatable: true
+    scrollable: true
 })
 });
 });

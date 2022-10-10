@@ -1049,6 +1049,9 @@
     <Content Include="Content\kendo\2022.3.913\Uniform\sprite_2x.png" />
     <Content Include="Content\kendo\2022.3.913\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\2022.3.913\Uniform\sprite_kpi_2x.png" />
+    <Content Include="Content\Login.js" />
+    <Content Include="Content\myStyles.css" />
+    <Content Include="Content\Register.js" />
     <Content Include="Content\Site.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
