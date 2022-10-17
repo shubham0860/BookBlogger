@@ -89,7 +89,8 @@ namespace BookBlogger.Web.Controllers
                 {
                     logger.Error("Exception Occurred during Adding the book");
                     logger.Error(e);
-                    return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed,e);
+                    var response = "Some Error Occurred";
+                    return Request.CreateErrorResponse(HttpStatusCode.ExpectationFailed,response);
                 }
 
             }

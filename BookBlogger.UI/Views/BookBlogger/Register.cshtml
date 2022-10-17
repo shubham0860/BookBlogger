@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+@*<h2>Register</h2>*@
+<div class="demo-section card k-float-left">
+
+    <div id="validation-success"></div>
+    @(Html.Kendo().Form<BookBlogger.UI.Models.Users>()
+        .Name("register")
+
+        .HtmlAttributes(new { controller = "Account", action = "register", method = "POST" })
+        .Layout(Layout)
+        .Validatable(v =>
+        {
+            v.ValidateOnBlur(true);
+            v.ValidationSummary(vs => vs.Enable(false));
+        })
+        .Items(items =>
+        {
+            items.AddGroup()
+                .Label("Enter Your Informations For Registration")
+
+                .Items(i =>
+                {
+
+                    i.Add()
+                         .Field(f => f.FirstName)
+                         .Id("txtFirstName")
+
+                         .EditorTemplateHandler("setFirstNameEditor")
+                         .Label(l => l.Text("First Name:"));
+                    i.Add()
+                        .Field(f => f.LastName)
+                        .Id("txtLastName")
+                        .EditorTemplateHandler("setLastNameEditor")
+                        .Label(l => l.Text("Last Name:"));
+                    i.Add()
+                        .Field(f => f.Username)
+                        .Id("txtUsername")
+                        .EditorTemplateHandler("setUsernameEditor")
+                        .Label(l => l.Text("Username:"));
+                    i.Add()
+                        .Field(f => f.Password)
+                        //.Id("txtPassword")
+                        .Label(l => l.Text("Password:"))
+                        .Hint("Hint: enter alphanumeric characters only.")
+                        .EditorTemplateHandler("setPasswordEditor");
+                });
+        })
+        .Events(ev => ev.ValidateField("onFormValidateField").Submit("onFormSubmit").Clear("onFormClear"))
+    )
+    <div>
+        <ul class="btn btn-info btnlogin">
+            <li>@Html.ActionLink("Login", "Login", "BookBlogger", new { area = "" }, null)</li>
+        </ul>
+    </div>
+</div>
+
+
+<script src="~/Content/Register.js"></script>
+
+<link href="~/Content/myStyles.css" rel="stylesheet" />
+

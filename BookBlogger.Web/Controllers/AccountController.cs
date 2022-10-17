@@ -86,15 +86,15 @@ namespace BookBlogger.Web.Controllers
                             if (_currentUser != null)
                             {
                                 UserId = _currentUser.ID;
-
-                                var newUrl = this.Url.Link("Default", new
-                                {
-                                    Controller = "Book",
-                                    Action = "Index"
-                                });
+                                var bookUrl = this.Url.Content("https://localhost:44315/book/index");
+                                //var newUrl = this.Url.Link("Default", new
+                                //{
+                                //    Controller = "Book",
+                                //    Action = "Index"
+                                //});
                                 logger.Info("User Logged in Successfully");
                                 return Request.CreateResponse(HttpStatusCode.Created,
-                                                         new { Success = true, RedirectUrl = newUrl });
+                                                         new { Success = true, RedirectUrl = bookUrl, user = _currentUser.ID, userName = _currentUser.Username, isAdmin = _currentUser.IsAdmin });
                             }
                         }
                         catch (Exception e)
@@ -124,14 +124,16 @@ namespace BookBlogger.Web.Controllers
         public HttpResponseMessage Logout()
         {
             UserId = 0;
-            var loginUrl = this.Url.Link("Default", new
-            {
-                Controller = "BookBlogger",
-                Action = "Logout"
-            });
+            var logoutUrl = this.Url.Content("https://localhost:44315/BookBlogger/Logout");
+
+            //var loginUrl = this.Url.Link("Default", new
+            //{
+            //    Controller = "BookBlogger",
+            //    Action = "Logout"
+            //});
             logger.Info("User Logged Out Successfully");
             return Request.CreateResponse(HttpStatusCode.Created,
-                                     new { Success = true, RedirectUrl = loginUrl });
+                                     new { Success = true, RedirectUrl = logoutUrl });
         }
     }
 }
